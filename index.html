@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Kellen 💗</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:white;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+}
+
+.screen{
+position:absolute;
+}
+
+.hidden{
+display:none;
+}
+
+h1{
+font-size:28px;
+}
+
+button{
+padding:15px 30px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin:10px;
+transition:0.3s;
+}
+
+#yes{
+background:#ff6fa5;
+color:white;
+}
+
+#no{
+background:#444;
+color:white;
+}
+
+.hearts{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+.heart{
+position:absolute;
+opacity:0.25;
+}
+
+#finalMessage{
+font-size:32px;
+}
+
+.confetti{
+position:fixed;
+width:10px;
+height:10px;
+background:red;
+top:-10px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh) rotate(720deg);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Corazones de fondo -->
+<div class="hearts" id="hearts"></div>
+
+<!-- Pantalla 1 -->
+<div id="loading" class="screen">
+<h1>Cargando sorpresa para el amor de mi vida, Kellen<span id="dots"></span></h1>
+</div>
+
+<!-- Pantalla 2 -->
+<div id="joke1" class="screen hidden">
+<h1>UPS… lo siento cariño 😔</h1>
+<p>El sistema detectó demasiada belleza en Kellen y se sobrecargó 💗</p>
+</div>
+
+<!-- Pantalla 3 -->
+<div id="joke2" class="screen hidden">
+<h1>JAJAJ solo quería hacerte una pregunta amor 😅</h1>
+</div>
+
+<!-- Pantalla principal -->
+<div id="questionScreen" class="screen hidden">
+<h1 id="question">Amor, ¿de verdad me quieres?</h1>
+
+<button id="yes">Sí</button>
+<button id="no">No</button>
+</div>
+
+<!-- Pantalla final -->
+<div id="final" class="screen hidden">
+<h1 id="finalMessage">Siii, te amo mucho mi amor 🥳🥳🥳</h1>
+
+<p id="counter"></p>
+
+<p>Gracias por ser parte de mi vida, Kellen💗</p>
+</div>
+
+<script>
+
+let dots = document.getElementById("dots");
+
+let dotCount = 0;
+
+setInterval(()=>{
+dotCount=(dotCount+1)%4;
+dots.innerText=".".repeat(dotCount);
+},500);
+
+setTimeout(()=>{
+loading.classList.add("hidden");
+joke1.classList.remove("hidden");
+},4000);
+
+setTimeout(()=>{
+joke1.classList.add("hidden");
+joke2.classList.remove("hidden");
+},6000);
+
+setTimeout(()=>{
+joke2.classList.add("hidden");
+questionScreen.classList.remove("hidden");
+},8000);
+
+let yes = document.getElementById("yes");
+let no = document.getElementById("no");
+
+let noSize = 1;
+let yesSize = 1;
+
+yes.onclick = ()=>{
+noSize +=0.5;
+yesSize -=0.1;
+
+no.style.transform=`scale(${noSize})`;
+yes.style.transform=`scale(${yesSize})`;
+
+if(yesSize < 0.2){
+document.getElementById("question").innerText="Ala amor… ¿y ahora cómo hacemos?";
+
+setTimeout(()=>{
+yes.style.display="block";
+no.style.display="block";
+
+yes.style.position="absolute";
+no.style.position="absolute";
+
+yes.style.top="55%";
+no.style.top="65%";
+
+},3000);
+}
+};
+
+yes.addEventListener("dblclick",()=>{
+questionScreen.classList.add("hidden");
+final.classList.remove("hidden");
+
+startConfetti();
+startCounter();
+});
+
+function startConfetti(){
+
+for(let i=0;i<150;i++){
+
+let confetti=document.createElement("div");
+
+confetti.classList.add("confetti");
+
+confetti.style.left=Math.random()*100+"%";
+
+confetti.style.background=`hsl(${Math.random()*360},100%,50%)`;
+
+confetti.style.animationDuration=(Math.random()*3+2)+"s";
+
+document.body.appendChild(confetti);
+}
+}
+
+function startCounter(){
+
+let startDate=new Date("2026-02-21");
+
+let today=new Date();
+
+let diff=today-startDate;
+
+let days=Math.floor(diff/(1000*60*60*24));
+
+document.getElementById("counter").innerText=
+"Llevamos juntos "+days+" días desde el 21/02/26 💗";
+}
+
+function createHearts(){
+
+let container=document.getElementById("hearts");
+
+let hearts=["💗","❤️","💕","💞","💓"];
+
+for(let i=0;i<30;i++){
+
+let h=document.createElement("div");
+
+h.classList.add("heart");
+
+h.innerText=hearts[Math.floor(Math.random()*hearts.length)];
+
+h.style.left=Math.random()*100+"%";
+h.style.top=Math.random()*100+"%";
+
+h.style.fontSize=(Math.random()*30+10)+"px";
+
+container.appendChild(h);
+}
+
+}
+
+createHearts();
+
+</script>
+
+</body>
+  </html>
